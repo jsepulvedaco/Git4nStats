@@ -1,0 +1,21 @@
+{
+  "name": "git4nstats",
+  "version": "1.0.0",
+  "description": "S4N backend exam ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index"
+  },
+  "author": "@jsepulvedaco",
+  "license": "ISC",
+  "dependencies": {
+    "@octokit/core": "^3.2.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.11.15"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.7"
+  }
+}
