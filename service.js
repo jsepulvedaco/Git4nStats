@@ -12,7 +12,6 @@ module.exports.getEvents = function (users) {
 
 	return Promise.all(eventsPromises)
 		.then((eventsData) => {
-			// eventsList.forEach((e) => console.log(e.data, '\n----------------------\n'));
 			return eventsData;
 		})
 		.catch((e) => {
@@ -27,8 +26,6 @@ module.exports.getGists = function (users) {
 
 	return Promise.all(gistsPromises)
 		.then((gistsData) => {
-			// console.log('service gitsts', gistsData);
-			// gistsList.forEach((e) => console.log(e.data, '\n----------------------\n'));
 			return gistsData;
 		})
 		.catch((e) => {
