@@ -16,7 +16,7 @@ module.exports.getEvents = function (users) {
 			return eventsData;
 		})
 		.catch((e) => {
-			console.error('an error occurred while fetching the events');
+			console.error(e);
 		});
 };
 
@@ -32,6 +32,6 @@ module.exports.getGists = function (users) {
 			return gistsData;
 		})
 		.catch((e) => {
-			console.error('an error occurred while fetching the gists');
+			console.error(e);
 		});
 };

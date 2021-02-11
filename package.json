@@ -4,7 +4,7 @@
   "description": "S4N backend exam ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "dev": "nodemon index"
   },
   "author": "@jsepulvedaco",
@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
-    "nodemon": "^2.0.7"
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   }
 }
