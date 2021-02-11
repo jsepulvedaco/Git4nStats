@@ -7,7 +7,7 @@ const octokit = new Octokit({
 
 module.exports.getEvents = function (users) {
 	const eventsPromises = users.map((user) => {
-		return octokit.request('GET /users/{user}/events', { user });
+		return octokit.request('GET /users/{user}/events', { user, per_page: '5' });
 	});
 
 	return Promise.all(eventsPromises)
@@ -22,7 +22,7 @@ module.exports.getEvents = function (users) {
 
 module.exports.getGists = function (users) {
 	const gistsPromises = users.map((user) => {
-		return octokit.request('GET /users/{user}/gists', { user });
+		return octokit.request('GET /users/{user}/gists', { user, per_page: '3' });
 	});
 
 	return Promise.all(gistsPromises)
