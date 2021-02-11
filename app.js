@@ -2,9 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 
-const { getEvents, getGists } = require('./api');
+const { getEvents, getGists } = require('./service');
 const Event = require('./models/Event');
 const Gist = require('./models/Gist');
+
+const { transformGistsData, transformEventsData } = require('./helpers');
 
 mongoose.connect(process.env.DATABASE_URL, {
 	useNewUrlParser: true,
@@ -23,7 +25,6 @@ app.use(express.json());
 // const users = ['jsepulvedaco', 'coryhouse', 'shiffman'];
 
 app.post('/', async (req, res) => {
-	console.log(req);
 	const users = req.body.users;
 
 	try {
@@ -36,46 +37,25 @@ app.post('/', async (req, res) => {
 		 * 		username: username
 		 * 		gists: []
 		 * } */
-		const gistsToSave = users.map((user, i) => {
-			let newGistFields = gists[i].data.map((g) => {
-				return {
-					created_at: g.created_at,
-					id: g.id,
-					description: g.description,
-					url: g.html_url,
-				};
-			});
-			return { username: user, gists: newGistFields };
-		});
+		const gistsToSave = transformGistsData(users, gists);
 
 		gistsToSave.forEach(async (g) => {
 			let gist = new Gist(g);
-			let newGist = await gist.save();
+			await gist.save();
 		});
 
 		/** {
 		 * 		username: username
 		 * 		events: {id1: {}, id2: {}}
 		 * } */
-		const eventsToSave = users.map((user, i) => {
-			let newEventFields = events[i].data.reduce((initialVal, currentVal) => {
-				initialVal[currentVal['id']] = {
-					created_at: currentVal.created_at,
-					repository: currentVal.repo.name,
-					type: currentVal.type,
-				};
-				return initialVal;
-			}, {});
-			return { username: user, events: newEventFields };
-		});
+		const eventsToSave = transformEventsData(users, events);
 
 		eventsToSave.forEach(async (e) => {
 			let event = new Event(e);
-			let newEvent = await event.save();
-			console.log(newEvent);
+			await event.save();
 		});
 
-		res.send({ eventsToSave, gistsToSave });
+		res.send({ events: eventsToSave, gists: gistsToSave });
 	} catch (e) {
 		console.error(e);
 		res
